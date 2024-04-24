@@ -1,6 +1,6 @@
-# flux-template - An opinionated cluster agnostic Flux GitOps template repository
+# (WIP) hetzner-k3s-flux-template - An opionated template for a J3s cluster implementing GitOps through Flux on Hetzner Cloud
 
-A lot of Flux template repositories expect you have already decided what type of Kubernetes distribution you want to use (i.e. the same one they are using). It works when you're following their design but it can be a pain when you even have a slighly different setup. This repository proposes the opposite approach, you know what core applications you want to run on your cluster, but you're not yet sure about the cluster infrastructure.
+This repository attempts to create a solid starting point for creating a fully fledged Flux managed K3s cluster on Hetzner Cloud.
 
 ## Table of contents
 
@@ -12,7 +12,7 @@ A lot of Flux template repositories expect you have already decided what type of
 
 ## Overview
 
-This Flux template was created with a holistic but flexible view in mind. The repository structure is straightforward, easy to understand and easy to use. Still, every aspect is explained below:
+This template is built on my general [`flux-template`](https://github.com/418Coffee/flux-template).
 
 ### Stack
 
