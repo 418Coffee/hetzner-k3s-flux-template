@@ -1,0 +1,25 @@
+#% if external_dns["install"] == True %#
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta2.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: external-dns
+  namespace: flux-system
+spec:
+  interval: 6h
+  targetNamespace: network
+  chart:
+    spec:
+      chart: external-dns
+      version: "1.x"
+      sourceRef:
+        kind: HelmRepository
+        name: external-dns
+        namespace: flux-system
+      interval: 3h
+  upgrade:
+    cleanupOnFail: true
+  values:
+    #{ external_dns["values"] | to_yaml | indent(4) }#
+#% endif %#

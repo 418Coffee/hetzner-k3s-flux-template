@@ -1,0 +1,68 @@
+# Age recipient used by the Flux to encrypt secrets.
+flux_age: 
+
+cilium:
+  install: false
+  # values: 
+  # https://docs.cilium.io/en/stable/helm-reference/
+  # https://github.com/cilium/cilium/blob/main/install/kubernetes/cilium/values.yaml
+  values: {}
+
+cert_manager:
+  install: false
+  # values: 
+  # https://github.com/cert-manager/cert-manager/blob/master/deploy/charts/cert-manager/values.yaml
+  values: {}
+
+external_dns:
+  install: false
+  # values: 
+  # https://github.com/kubernetes-sigs/external-dns/blob/master/charts/external-dns/values.yaml
+  values: {}
+
+traefik:
+  install: false
+  # values: 
+  # https://github.com/traefik/traefik-helm-chart/blob/master/traefik/values.yaml
+  values: {}
+
+capacitor:
+  install: false
+
+kube_prometheus_stack:
+  install: false
+  # values: 
+  # https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-prometheus-stack/values.yaml
+  values: {}
+
+loki:
+  install: false
+  # values: 
+  # https://github.com/grafana/loki/blob/main/production/helm/loki/values.yaml
+  values: {}
+
+promtail:
+  install: false
+  # values:
+  # https://github.com/grafana/helm-charts/blob/main/charts/promtail/values.yaml
+  values: {}
+
+kured:
+  install: false
+  # values: 
+  # https://github.com/kubereboot/charts/blob/main/charts/kured/values.yaml
+  values: {}
+
+system_upgrade_controller:
+  install: false
+  # values: 
+  # https://github.com/nimbolus/helm-charts/blob/main/charts/system-upgrade-controller/values.yaml
+  values: {}
+
+reloader:
+  install: false
+  # values: 
+  # https://github.com/stakater/Reloader/blob/master/deployments/kubernetes/chart/reloader/values.yaml
+  values: {}
+
+

@@ -1,0 +1,26 @@
+#% if system_upgrade_controller["install"] == True %#
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta2.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: system-upgrade-controller
+  namespace: flux-system
+spec:
+  interval: 6h
+  targetNamespace: upgrade
+  chart:
+    spec:
+      chart: system-upgrade-controller
+      version: "0.x"
+      sourceRef:
+        kind: HelmRepository
+        name: nimbolus
+        namespace: flux-system
+      interval: 3h
+  upgrade:
+    cleanupOnFail: true
+    crds: CreateReplace # not necessary for system-upgrade-controller?
+  values:
+    #{ system_upgrade_controller["values"] | to_yaml | indent(4) }#
+#% endif %#

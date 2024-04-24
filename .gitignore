@@ -1,0 +1,6 @@
+__pycache__
+
+# commonly used age key names
+*.age
+*.key
+*.agekey

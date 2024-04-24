@@ -1,0 +1,16 @@
+[makejinja]
+inputs = ["../templates/"]
+output = "../"
+data = ["../config.yaml"]
+plugins = ["plugin:Plugin"]
+force = true
+jinja_suffix = ".tmpl"
+
+
+[makejinja.delimiter]
+block_start = "#%"
+block_end = "%#"
+comment_start = "#|"
+comment_end = "#|"
+variable_start = "#{"
+variable_end = "}#"

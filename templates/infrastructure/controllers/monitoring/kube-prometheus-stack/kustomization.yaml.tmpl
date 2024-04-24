@@ -1,0 +1,6 @@
+#% if kube_prometheus_stack["install"] == True %#
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources: 
+  - release.yaml
+#% endif %#

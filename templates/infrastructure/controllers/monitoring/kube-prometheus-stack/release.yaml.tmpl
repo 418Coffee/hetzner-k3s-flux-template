@@ -1,0 +1,33 @@
+#% if kube_prometheus_stack["install"] == True %#
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta2.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: kube-prometheus-stack
+  namespace: flux-system
+spec:
+  interval: 6h
+  targetNamespace: monitoring
+  chart:
+    spec:
+      chart: kube-prometheus-stack
+      version: "57.x"
+      sourceRef:
+        kind: HelmRepository
+        name: prometheus-community
+        namespace: flux-system
+      interval: 3h
+  upgrade:
+    cleanupOnFail: true
+    crds: CreateReplace
+  driftDetection:
+    mode: enabled
+    ignore:
+      # Ignore "validated" annotation which is not inserted during install
+      - paths: [ "/metadata/annotations/prometheus-operator-validated" ]
+        target:
+          kind: PrometheusRule
+  values:
+    #{ kube_prometheus_stack["values"] | to_yaml | indent(4) }#
+#% endif %#

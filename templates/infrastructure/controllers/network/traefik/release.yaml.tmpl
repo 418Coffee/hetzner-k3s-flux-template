@@ -1,0 +1,26 @@
+#% if traefik["install"] == True %#
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta2.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: traefik
+  namespace: flux-system
+spec:
+  interval: 6h
+  targetNamespace: network
+  chart:
+    spec:
+      chart: traefik
+      version: "26.x"
+      sourceRef:
+        kind: HelmRepository
+        name: traefik
+        namespace: flux-system
+      interval: 3h
+  upgrade:
+    cleanupOnFail: true
+    crds: CreateReplace
+  values:
+    #{ traefik["values"] | to_yaml | indent(4) }#
+#% endif %#

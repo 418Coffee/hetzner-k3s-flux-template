@@ -1,0 +1,11 @@
+---
+creation_rules:
+  - path_regex: apps/.*.yaml
+    encrypted_regex: ^(data|stringData)$
+    age: >-
+      #{ flux_age }#
+  - path_regex: infrastructure/.*.yaml
+    encrypted_regex: ^(data|stringData)$
+    age: >-
+      #{ flux_age }#
+      

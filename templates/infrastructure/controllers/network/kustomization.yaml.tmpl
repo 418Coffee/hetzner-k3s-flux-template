@@ -1,0 +1,16 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources: 
+  - namespace.yaml
+#% if cert_manager["install"] == True %#
+  - ./cert-manager
+#% endif %#
+#% if cilium["install"] == True %#
+  - ./cilium
+#% endif %#
+#% if external_dns["install"] == True %#
+  - ./external-dns
+#% endif %#
+#% if traefik["install"] == True %#
+  - ./traefik
+#% endif %#
