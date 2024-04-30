@@ -1,18 +1,43 @@
 # Age recipient used by the Flux to encrypt secrets.
-flux_age: 
+flux_age: ""
+
+hcloud_cloud_controller_manager:
+  install: true
+  # values:
+  # https://github.com/hetznercloud/hcloud-cloud-controller-manager/blob/main/chart/values.yaml
+  values: {}
+
+longhorn:
+  install: true
+  # Whether your cluster is using the Cluster Autoscaler for Hetzner Cloud.
+  autoscaler_enabled: true
+  # The file system type for Longhorn, if enabled (either ext4 or xfs).
+  default_fs_type: ext4
+  # How many replicas volumes should longhorn create.
+  default_replica_count: 3
+  # values:
+  # https://github.com/longhorn/charts/blob/v1.6.x/charts/longhorn/values.yaml
+  values_override: {}
 
 cilium:
-  install: false
+  install: true
+  # You can enable encrypted wireguard for the CNI by setting this to "true". Default is "false".
+  # FYI, Hetzner says "Traffic between cloud servers inside a Network is private and isolated, but not automatically encrypted."
+  # Source: https://docs.hetzner.com/cloud/networks/faq/#is-traffic-inside-hetzner-cloud-networks-encrypted
+  # If you're using values_override, the responsibility of enabling or disabling Wireguard falls on you.
+  enable_wireguard: false
+  # Enable Hubble Observability to collect and visualize network traffic
+  enable_hubble: true
   # values: 
   # https://docs.cilium.io/en/stable/helm-reference/
   # https://github.com/cilium/cilium/blob/main/install/kubernetes/cilium/values.yaml
-  values: {}
-
+  values_override: {}
+    
 cert_manager:
-  install: false
+  install: true
   # values: 
   # https://github.com/cert-manager/cert-manager/blob/master/deploy/charts/cert-manager/values.yaml
-  values: {}
+  values_override: {}
 
 external_dns:
   install: false
@@ -21,10 +46,69 @@ external_dns:
   values: {}
 
 traefik:
-  install: false
+  install: true
+  # By default traefik image tag is an empty string which uses latest image tag.
+  image_tag: ""
+  # You can change the number of replicas for selected ingress controller here. It is recommended to choose a number based on the number of agent nodes (1 node = 1 replica, 2 nodes = 2 replicas, 3+ nodes = 3 replicas)
+  replica_count: 1
+  # It is recommended to use a Hetzner Load Balancer over K3s' built-in Klipper.
+  hetzner_lb: true
+  # The name of the Hetzner Load Balancer you want to use.
+  lb_name: ""
+  # LB location and type, the latter will depend on how much load you want it to handle, see https://www.hetzner.com/cloud/load-balancer
+  lb_location: ""
+  lb_type: ""
+  # Disables the public network of the load balancer.
+  lb_disable_public_network: false
+  # Disable IPv6 for the load balancer.
+  lb_disable_ipv6: false
+  
+  # Specifies the algorithm type of the load balancer. Can be round_robin or least_connections.
+  lb_algorithm_type: round_robin
+  # Specifies the interval at which a health check is performed. Minimum is 3s.
+  lb_health_check_interval: 15s
+  # Specifies the timeout of a single health check. Must not be greater than the health check interval. Minimum is 1s
+  lb_health_check_timeout: 10s
+  # Specifies the number of times a health check is retried before a target is marked as unhealthy.
+  lb_health_check_retries: 3
+  # Purpose:
+  # The lb_hostname setting optimizes communication between services within the Kubernetes cluster
+  # when they use domain names instead of direct service names. By associating a domain name directly
+  # with the Hetzner Load Balancer, this setting can help reduce potential communication delays.
+  #
+  # Scenario:
+  # If Service B communicates with Service A using a domain (e.g., `a.mycluster.domain.com`) that points
+  # to an external Load Balancer, there can be a slowdown in communication.
+  #
+  # Guidance:
+  # - If your internal services use domain names pointing to an external LB, set lb_hostname to a domain
+  #   like `mycluster.domain.com`.
+  # - Create an A record pointing `mycluster.domain.com` to your LB's IP.
+  # - Create a CNAME record for `a.mycluster.domain.com` (or xyz.com) pointing to `mycluster.domain.com`.
+  #
+  # Technical Note:
+  # This setting sets the `load-balancer.hetzner.cloud/hostname` in the Hetzner LB definition.
+  #
+  # Recommendation:
+  # This setting is optional. If services communicate using direct service names, you can leave this unset.
+  # For inter-namespace communication, use `.service_name` as per Kubernetes norms.
+  lb_hostname: ""
+  # By default traefik is configured to redirect http traffic to https, you can set this to "false" to disable the redirection.
+  redirect_to_https: true
+  # If you want to configure additional trusted IPs for traefik, enter them here as a list of IPs (strings).
+  additional_trusted_ips: []
+  additional_ports: []
+  # Enable or disable pod disruption budget for traefik. Values are maxUnavailable: 33% and minAvailable: 1.
+  pod_disruption_budget: true
+   # Enable or disable default resource requests and limits for traefik. Values requested are 100m & 50Mi and limits 300m & 150Mi.
+  resource_limits: true
+  # Enable or disable Horizontal Pod Autoscaler for traefik.
+  autoscaling: true
+  # Number of maximum replicas per traefik controller. Used for ingress HPA. Must be higher than number of replicas.
+  max_replica_count: 10
   # values: 
   # https://github.com/traefik/traefik-helm-chart/blob/master/traefik/values.yaml
-  values: {}
+  values_override: {}
 
 capacitor:
   install: false
@@ -54,7 +138,15 @@ kured:
   values: {}
 
 system_upgrade_controller:
-  install: false
+  install: true
+  # The K3s channel your cluster is using at the time of installing this template.
+  # This value is only needed if enable_k3s_upgrade is true.
+  # Possible values: https://update.k3s.io/v1-release/channels
+  # e.g "latest", "stable", "v1.29"
+  k3s_channel: ""
+  # Enable automatic K3s upgrades.
+  # Recommended to use in any HA set up (i.e. at least 3 control plane nodes & 2 agents).
+  enable_k3s_upgrade: true
   # values: 
   # https://github.com/nimbolus/helm-charts/blob/main/charts/system-upgrade-controller/values.yaml
   values: {}
@@ -64,5 +156,3 @@ reloader:
   # values: 
   # https://github.com/stakater/Reloader/blob/master/deployments/kubernetes/chart/reloader/values.yaml
   values: {}
-
-
