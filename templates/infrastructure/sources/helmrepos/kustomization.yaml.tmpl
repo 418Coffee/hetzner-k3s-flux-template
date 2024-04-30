@@ -14,11 +14,17 @@ resources:
 #% if loki["install"] == True or promtail["install"] == True %#
   - grafana.yaml
 #% endif %#
+#% if hcloud_cloud_controller_manager["install"] == True %#
+  - hcloud.yaml
+#% endif %#
 #% if cert_manager["install"] == True %#
   - jetstack.yaml
 #% endif %#
 #% if kured["install"] == True %#
   - kured.yaml
+#% endif %#
+#% if longhorn["install"] == True %#
+  - longhorn.yaml
 #% endif %#
 #% if system_upgrade_controller["install"] == True %#
   - nimbolus.yaml
