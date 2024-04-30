@@ -23,58 +23,84 @@ All core components are optional, you can choose to only use the repository stru
     <tr>
         <th>Name</th>
         <th>Description</th>
+        <th>Installed by default</th>
     </tr>
     <tr>
         <td><a href="https://fluxcd.io/">Flux</a></td>
         <td>Automated Kubernetes cluster updates using GitOps</td>
+        <td>N/A</td>
     </tr>
     <tr>
         <td><a href="https://github.com/getsops/sops">SOPS</a></td>
         <td>Secret management</td>
+        <td>N/A</td>
+    </tr>
+    <tr>
+        <td><a href="https://longhorn.io/">Longhorn
+</a></td>
+        <td>Cloud native distributed block storage for Kubernetes</td>
+        <td>✅</td>
+    </tr>
+    <tr>
+        <td><a href="https://github.com/hetznercloud/hcloud-cloud-controller-manager">hcloud-cloud-controller-manager
+</a></td>
+        <td>Kubernetes Cloud Controller Manager for Hetzner Cloud</td>
+        <td>✅</td>
     </tr>
     <tr>
         <td><a href="https://cilium.io/">Cilium</a></td>
-        <td>eBPF-based Networking, Observability, Security.</td>
+        <td>eBPF-based Networking, Observability, Security</td>
+        <td>✅</td>
     </tr>
     <tr>
         <td><a href="https://cert-manager.io/">cert-manager</a></td>
         <td>X.509 certificate management</td>
+        <td>✅</td>
     </tr>
     <tr>
         <td><a href="https://kubernetes-sigs.github.io/external-dns/">ExternalDNS</a></td>
         <td>Synchronize exposed Kubernetes Services and Ingresses with DNS providers</td>
+        <td>❌</td>
     </tr>
     <tr>
         <td><a href="https://traefik.io/traefik/">Traefik</a></td>
         <td>Edge Router / Ingress</td>
+        <td>✅</td>
     </tr>
     <tr>
         <td><a href="https://github.com/gimlet-io/capacitor">Capacitor</a></td>
         <td>General purpose UI for Flux</td>
+        <td>❌</td>
     </tr>
     <tr>
         <td><a href="https://github.com/prometheus-operator/kube-prometheus">kube-prometheus</a></td>
         <td>Monitoring stack, including Prometheus, Grafana, and Alertmanager</td>
+        <td>❌</td>
     </tr>
     <tr>
         <td><a href="https://grafana.com/oss/loki/">Loki</a></td>
         <td>Log aggregation</td>
+        <td>❌</td>
     </tr>
     <tr>
         <td><a href="https://grafana.com/docs/loki/latest/send-data/promtail/">Promtail</a></td>
         <td>Log discovery</td>
+        <td>❌</td>
     </tr>
     <tr>
         <td><a href="https://kured.dev/">Kured</a></td>
         <td>Reboot Daemon</td>
+        <td>❌</td>
     </tr>
     <tr>
         <td><a href="https://github.com/rancher/system-upgrade-controller">System Upgrade Controller</a></td>
         <td>Automated node updates</td>
+        <td>✅</td>
     </tr>
     <tr>
         <td><a href="https://github.com/stakater/Reloader">Reloader</a></td>
         <td>Auto-reload Kubernetes resources based on ConfigMap/Secret changes</td>
+        <td>❌</td>
     </tr>
 </table>
 </div>
