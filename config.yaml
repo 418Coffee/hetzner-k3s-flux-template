@@ -147,6 +147,8 @@ system_upgrade_controller:
   # Enable automatic K3s upgrades.
   # Recommended to use in any HA set up (i.e. at least 3 control plane nodes & 2 agents).
   enable_k3s_upgrade: true
+  # Whether you're using openSUSE as an OS.
+  opensuse: false
   # values: 
   # https://github.com/nimbolus/helm-charts/blob/main/charts/system-upgrade-controller/values.yaml
   values: {}

@@ -21,6 +21,22 @@ spec:
   upgrade:
     cleanupOnFail: true
     crds: CreateReplace # not necessary for system-upgrade-controller?
+  #% if system_upgrade_controller["opensuse"] == True %#
+  postRenderers:
+    - kustomize:
+        patches:
+          - target:
+              version: apps/v1
+              kind: Deployment
+              name: system-upgrade-controller
+            patch: |
+              - op: replace
+                path: /spec/template/spec/containers/0/volumeMounts/0/mountPath
+                value: /var/lib/ca-certificates
+              - op: replace
+                path: /spec/template/spec/volumes/0/hostPath/path
+                value: /var/lib/ca-certificates 
+  #% endif %#  
   values:
     #{ system_upgrade_controller["values"] | to_yaml | indent(4) }#
 #% endif %#
