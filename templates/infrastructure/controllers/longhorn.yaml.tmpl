@@ -1,0 +1,36 @@
+#% if longhorn["install"] == True %#
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta2.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: longhorn
+  namespace: flux-system
+spec:
+  interval: 6h
+  chart:
+    spec:
+      chart: longhorn
+      version: "1.6.x"
+      sourceRef:
+        kind: HelmRepository
+        name: longhorn
+        namespace: flux-system
+      interval: 3h
+  upgrade:
+    cleanupOnFail: true
+    crds: CreateReplace
+  values:
+    #% if longhorn["values_override"] == {} %#
+    defaultSettings:
+    #% if longhorn["autoscaler_enabled"] == {} %#
+      kubernetesClusterAutoscalerEnabled: true
+    #% endif %#
+      defaultDataPath: /var/longhorn
+    persistence:
+      defaultFsType: #{ longhorn["default_fs_type"] }#
+      defaultClassReplicaCount: #{ longhorn["default_replica_count"] }#
+    #% else %#
+    #{ longhorn["values_override"] | to_yaml | indent(4) }#
+    #% endif %#
+#% endif %#

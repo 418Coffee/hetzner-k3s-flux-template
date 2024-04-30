@@ -22,5 +22,9 @@ spec:
     cleanupOnFail: true
     crds: CreateReplace
   values:
+    #% if cert_manager["values_override"] == {} %#
+    installCRDs: true
+    #% else %#
     #{ cert_manager["values"] | to_yaml | indent(4) }#
+    #% endif %#   
 #% endif %#

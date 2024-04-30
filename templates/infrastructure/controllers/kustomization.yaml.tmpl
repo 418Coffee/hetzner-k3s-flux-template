@@ -4,9 +4,17 @@ kind: Kustomization
 buildMetadata: [ originAnnotations ]
 # All controllers should be included in this kustomization, EXCEPT for monitoring, network and upgrade.
 # They are handled separately.
-#% if reloader["install"] == True %#
-resources: 
-  - reloader.yaml
-#% else %#
+#% if hcloud_cloud_controller_manager["install"] != True and longhorn["install"] != True and reloader["install"] != True %#
 resources: []
+#% else %#
+resources: 
+  #% if hcloud_cloud_controller_manager["install"] == True %#
+  - hccm.yaml
+  #% endif %#
+  #% if longhorn["install"] == True %#
+  - longhorn.yaml
+  #% endif %#
+  #% if reloader["install"] == True %#
+  - reloader.yaml
+  #% endif %#
 #% endif %#

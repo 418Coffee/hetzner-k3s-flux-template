@@ -22,5 +22,118 @@ spec:
     cleanupOnFail: true
     crds: CreateReplace
   values:
-    #{ traefik["values"] | to_yaml | indent(4) }#
+    #% if traefik["values_override"] == {} %#
+    image:
+    tag: #{ traefik["image_tag"] }#
+    deployment:
+      replicas: #{ traefik["replica_count"] }#
+    globalArguments: []
+    service:
+      enabled: true
+      type: LoadBalancer
+    #% if traefik["hetzner_lb"] == True %#
+    annotations:
+      "load-balancer.hetzner.cloud/name": #{ traefik["lb_name"] | quote }#
+      "load-balancer.hetzner.cloud/use-private-ip": "true"
+      "load-balancer.hetzner.cloud/disable-private-ingress": "true"
+      "load-balancer.hetzner.cloud/disable-public-network": #{ traefik["lb_disable_public_network"] | quote | lower }#
+      "load-balancer.hetzner.cloud/ipv6-disabled": #{ traefik["lb_disable_ipv6"] | quote | lower}#
+      "load-balancer.hetzner.cloud/location": #{ traefik["lb_location"] | quote }#
+      "load-balancer.hetzner.cloud/type": #{ traefik["lb_type"] | quote }#
+      "load-balancer.hetzner.cloud/uses-proxyprotocol": #{ traefik["hetzner_lb"] | quote | lower }#
+      "load-balancer.hetzner.cloud/algorithm-type": #{ traefik["lb_algorithm_type"] | quote }#
+      "load-balancer.hetzner.cloud/health-check-interval":  #{ traefik["lb_health_check_interval"] | quote }#
+      "load-balancer.hetzner.cloud/health-check-timeout": #{ traefik["lb_health_check_timeout"] | quote }#
+      "load-balancer.hetzner.cloud/health-check-retries":  #{ traefik["lb_health_check_retries"] | quote }#
+    #% if traefik["lb_hostname"] != "" %#
+      "load-balancer.hetzner.cloud/hostname":  #{ traefik["lb_hostname"] | quote }#
+    #% endif %#
+    #% endif %#
+    ports:
+      web:
+    #% if traefik["redirect_to_https"] == True %#
+        redirectTo:
+          port: websecure
+    #% endif %#
+    #% if traefik["hetzner_lb"] == True %#
+        proxyProtocol:
+          trustedIPs:
+            - 127.0.0.1/32
+            - 10.0.0.0/8
+    #% for ip in traefik["additional_trusted_ips"] %#
+            - #{ ip }#
+    #% endfor %#
+        forwardedHeaders:
+          trustedIPs:
+            - 127.0.0.1/32
+            - 10.0.0.0/8
+    #% for ip in traefik["additional_trusted_ips"] %#
+            - #{ ip }#
+    #% endfor %#
+      websecure:
+        proxyProtocol:
+          trustedIPs:
+            - 127.0.0.1/32
+            - 10.0.0.0/8
+    #% for ip in traefik["additional_trusted_ips"] %#
+            - #{ ip }#
+    #% endfor %#
+        forwardedHeaders:
+          trustedIPs:
+            - 127.0.0.1/32
+            - 10.0.0.0/8
+    #% for ip in traefik["additional_trusted_ips"] %#
+            - #{ ip }#
+    #% endfor %#
+    #% endif %#
+    #% if traefik["additional_ports"] | length > 0 %#
+    #% for option in traefik["additional_ports"] %#
+      #{ option["name"] }#:
+        port: #{ option["port"] }#
+        expose: true
+        exposedPort: #{ option["exposedPort"] }#
+        protocol: TCP
+    #% if traefik["hetzner_lb"] == True %#
+        proxyProtocol:
+          trustedIPs:
+            - 127.0.0.1/32
+            - 10.0.0.0/8
+    #% for ip in traefik["additional_trusted_ips"] %#
+            - #{ ip }#
+    #% endfor %#
+        forwardedHeaders:
+          trustedIPs:
+            - 127.0.0.1/32
+            - 10.0.0.0/8
+    #% for ip in traefik["additional_trusted_ips"] %#
+            - #{ ip }#
+    #% endfor %#
+    #% endif %#
+    #% endfor %#
+    #% endif %#
+    #% if traefik["pod_disruption_budget"] == True %#
+    podDisruptionBudget:
+      enabled: true
+      maxUnavailable: 33%
+    #% endif %#
+    additionalArguments:
+      - "--providers.kubernetesingress.ingressendpoint.publishedservice=network/traefik"
+    #% if traefik["resource_limits"] == True %#
+    resources:
+      requests:
+        cpu: "100m"
+        memory: "50Mi"
+      limits:
+        cpu: "300m"
+        memory: "150Mi"
+    #% endif %#
+    #% if traefik["autoscaling"] == True %#
+    autoscaling:
+      enabled: true
+      minReplicas:  #{ traefik["replica_count"] }#
+      maxReplicas:  #{ traefik["max_replica_count"] }#
+    #% endif %#
+    #% else %#
+    #{ traefik["values_override"] | to_yaml | indent(4) }#
+    #% endif %#   
 #% endif %#
