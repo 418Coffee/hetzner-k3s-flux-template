@@ -1,4 +1,4 @@
-# (WIP) hetzner-k3s-flux-template - An opionated template for a J3s cluster implementing GitOps through Flux on Hetzner Cloud
+# (WIP) hetzner-k3s-flux-template - An opionated template for a K3s cluster implementing GitOps through Flux on Hetzner Cloud
 
 This repository attempts to create a solid starting point for creating a fully fledged Flux managed K3s cluster on Hetzner Cloud.
 
