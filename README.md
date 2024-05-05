@@ -1,4 +1,4 @@
-# (WIP) hetzner-k3s-flux-template - An opionated template for a K3s cluster implementing GitOps through Flux on Hetzner Cloud
+# hetzner-k3s-flux-template - An opionated template for a K3s cluster implementing GitOps through Flux on Hetzner Cloud
 
 Flux is an amazing tool for managing cluster resources, Hetzner Cloud is a great platform for creating cost effective hobby or production Kuberenetes clusters. This repository attempts to create a solid starting point for creating a fully fledged Flux managed K3s cluster on Hetzner Cloud.
 
