@@ -212,7 +212,7 @@ Getting started is easy, the following guide uses GitHub as a Git server.
 
 #### Prerequisites
 
-- A (preferably clean) Kubernetes cluster that does not have Flux installed, can be any distribution. For local testing you can use something like [minikube](https://minikube.sigs.k8s.io/docs/), [kind](https://kind.sigs.k8s.io/), [microk8s](https://microk8s.io/), etc.
+- A (preferably clean) K3s cluster on Hetzner Cloud that does not have Flux installed.
 - [age](https://github.com/FiloSottile/age) for secret keys.
 - [sops](https://github.com/getsops/sops) for encrypting secrets.
 - [just](https://github.com/casey/just) for commands.
@@ -300,11 +300,19 @@ flux bootstrap github \
 
 If you wish to create a public repository, add the --private=false flag.
 
-10. Enjoy your cluster 🎉!
+10. Done!
 
-You know have a GitOps compliant cluster fully managed through a Git repository, the sky's the limit 🚀!
+You now have a GitOps compliant K3s cluster hosted on Hetzner Cloud that is fully managed through a GitHub repository, the sky's the limit 🚀!
 
 ## Considerations
+
+**_Why use Hetzner Cloud?_**
+
+Hetzner Cloud has a good price to performance ratio. On top of that they also offer outstanding service and support.
+
+**_Why use K3s?_**
+
+K3s is perfect for Hetzner Cloud as it has a minimal footprint. Meaning you can create a capable HA (High Availability) cluster for cheap.
 
 **_Why not a monorepo approach?_**
 
