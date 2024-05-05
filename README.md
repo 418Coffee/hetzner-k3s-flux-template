@@ -306,6 +306,10 @@ You now have a GitOps compliant K3s cluster hosted on Hetzner Cloud that is full
 
 ## Considerations
 
+**_This looks interesting but complicated, how can I understand this template better?_**
+
+I've tried to make everything as intuitive as possible. Looking at the individual files and cross-referencing values should help. I also recommend you to carefully look over the [Flux documentation](https://fluxcd.io/flux/) whenever you don't understand the contents of a file.
+
 **_Why use Hetzner Cloud?_**
 
 Hetzner Cloud has a good price to performance ratio. On top of that they also offer outstanding service and support.
