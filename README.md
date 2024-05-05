@@ -165,7 +165,7 @@ The `cluster` directory holds all the files necessary for Flux to work. The `flu
 
 #### Infrastructure
 
-The `infrastructure` is structured into 5 sub directories:
+The `infrastructure` directory is structured into individual files and 5 predetermined sub directories:
 
 - `configs`: Kubernetes custom resources such as cert issuers and networks policies
 - `controllers`: namespaces and Helm release definitions for Kubernetes controllers
@@ -181,7 +181,6 @@ The `configs`, `image-automations`, `notifications` directories have no resource
 │   ├── 📁 monitoring
 |   ├── 📁 network
 |   ├── 📁 upgrade
-|   ├── reloader.yaml
 |   └── kustomization.yaml
 │  
 └── 📁 sources
