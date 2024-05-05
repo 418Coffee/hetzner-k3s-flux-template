@@ -12,7 +12,7 @@ This repository attempts to create a solid starting point for creating a fully f
 
 ## Overview
 
-This template is built on my general [`flux-template`](https://github.com/418Coffee/flux-template).
+This template is built on my general [`flux-template`](https://github.com/418Coffee/flux-template). It is generally the same except for some minor changes in the [`config.yaml`](https://github.com/418Coffee/hetzner-k3s-flux-template/blob/main/config.yaml) file. The `values` key for a controller is replaced with a `values_override` key when we offer an optimized default configuration. If you wish to not use our default options just fill in `values_override` with whatever configuration you want and the default options will be ignored.
 
 ### Stack
 
@@ -23,7 +23,7 @@ All core components are optional, you can choose to only use the repository stru
     <tr>
         <th>Name</th>
         <th>Description</th>
-        <th>Installed by default</th>
+        <th>Optimized defaults</th>
     </tr>
     <tr>
         <td><a href="https://fluxcd.io/">Flux</a></td>
