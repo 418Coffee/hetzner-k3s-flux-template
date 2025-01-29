@@ -111,10 +111,10 @@ All core components are optional, you can choose to only use the repository stru
 flowchart TD;
     id1[apps] -->|dependsOn| id2[configs]
     %% https://github.com/mermaid-js/mermaid/issues/2977
-    subgraph "`&nbsp**infrastructure**&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp`"
+    subgraph "`**infrastructure**`"
         id2[configs] -->|dependsOn| id3[controllers]
         %% https://github.com/mermaid-js/mermaid/issues/2977
-        subgraph "`&nbsp**controllers**&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp`"
+        subgraph "`**controllers**`"
             id3[controllers] -->|dependsOn| id4[monitoring]
             id4[upgrade] -->|dependsOn| id5[monitoring]
             id5[monitoring] -->|dependsOn| id6[network]
